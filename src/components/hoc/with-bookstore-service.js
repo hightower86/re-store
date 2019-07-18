@@ -1,15 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { BookstoreServiceConsumer } from '../bookstore-service-context';
 
-const withBookstoreService = (View) => {
-  return class extends Component {
-    render() {
-      return (
-        <div>
-          <h2 className='red'>h2</h2>
-          <View />
-        </div>
-      );
-    }
+const withBookstoreService = () => (Wrapped) => {
+  return (props) => {
+    return (
+      <BookstoreServiceConsumer>
+        {
+          (bookstoreService) => {
+            return (<Wrapped {...props} 
+              bookstoreService={bookstoreService} />)
+          } 
+        }
+      </BookstoreServiceConsumer>
+    );
   }
 };
 

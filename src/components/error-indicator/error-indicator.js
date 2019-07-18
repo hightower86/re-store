@@ -12,7 +12,6 @@ const ErrorIndicator = () => {
       <p className='ml-5'>sorry, I'm so apologise</p>
     </div>
   )
-  
 };
 
 export default ErrorIndicator;
