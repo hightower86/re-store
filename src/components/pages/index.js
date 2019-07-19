@@ -1,5 +1,7 @@
-import Goods from './goods';
+import HomePage from './home-page';
+import CartPage from './cart-page';
 
 export {
-  Goods
+  HomePage,
+  CartPage
 };
