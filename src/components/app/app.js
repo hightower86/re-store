@@ -1,23 +1,15 @@
 import React from 'react';
-import { Goods } from '../pages';
-import { BookstoreServiceProvider } from './../bookstore-service-context';
-import ErrorBoundry from '../error-boundry';
+import { withBookstoreService } from '../hoc';
 
 import './app.css';
 
-function App() {
+function App({ bookstoreService }) {
+  console.log(bookstoreService.getBooks())
   return (
-    <ErrorBoundry>
-      <BookstoreServiceProvider value={0}>
-        <div className="App">
-          <header className="App-header blue b">
-            <h2>HEADER</h2>
-          </header>
-          <Goods />
-        </div>
-      </BookstoreServiceProvider>
-    </ErrorBoundry>
+    
+    <h2>App</h2>
+     
   );
 }
 
-export default App;
+export default withBookstoreService()(App);
