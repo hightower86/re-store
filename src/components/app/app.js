@@ -7,13 +7,13 @@ import './app.css';
 function App() {
   
   return (
-    <Switch>
-      <Route path="/" exact component={HomePage}  />
-      <Route path="/cart" component={CartPage}/>
-
-    </Switch>
-    
-     
+    <div>
+      <h2>Header</h2>
+      <Switch>
+        <Route path="/" exact component={HomePage}  />
+        <Route path="/cart" component={CartPage}/>
+      </Switch>
+    </div>
   );
 }
 
