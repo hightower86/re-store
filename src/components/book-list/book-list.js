@@ -25,7 +25,7 @@ class BookList extends Component {
     console.log(books);
 
     return (
-      <ul>
+      <ul className='book-list'>
         {
           books.map((book) => {
             return (

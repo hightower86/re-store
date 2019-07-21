@@ -9,10 +9,13 @@ function App() {
   return (
     <div>
       <h2>Header</h2>
-      <Switch>
-        <Route path="/" exact component={HomePage}  />
-        <Route path="/cart" component={CartPage}/>
-      </Switch>
+      <main role='main' className='container'>
+        <Switch>
+          <Route path="/" exact component={HomePage}  />
+          <Route path="/cart" component={CartPage}/>
+        </Switch>
+      </main>
+    
     </div>
   );
 }
