@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import  { bindActionCreators } from 'redux';
 
 import withBookstoreService from '../hoc/with-bookstore-service';
 import BookListItem from '../book-list-item';
 import { booksLoaded } from '../../actions';
 import compose from '../../utils';
+import Spinner from '../spinner';
 
 import './book-list.css';
 
@@ -20,9 +20,10 @@ class BookList extends Component {
 
   render() {
 
-    const { books } = this.props;
-    console.log(books);
-
+    const { books, loading } = this.props;
+    if (loading) {
+      return <Spinner />
+    }
     return (
       <ul className='book-list'>
         {
@@ -37,8 +38,8 @@ class BookList extends Component {
   };
 }
 
-const mapStateToProps = ({ books }) => {
-  return { books }
+const mapStateToProps = ({ books, loading }) => {
+  return { books, loading }
 };
 
 const mapDispatchToProps = {
