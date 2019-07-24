@@ -1,7 +1,42 @@
 import React from 'react';
 import './shopping-cart-table.css';
 
-const ShoppingCartTable = () => {
+
+
+
+const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete}) => {
+  
+  items =  items===undefined ? [] : items;
+
+  const renderRow = (item, idx) => {
+    const { id, name, count, total } = item;
+    return (
+      <tr key={id}>
+        <td>{id+1}</td>
+        <td>{name}</td>
+        <td>{count}</td>
+        <td>${total}</td>
+        <td>
+          <button 
+            onClick={()=>onDelete(id)}
+            className="btn btn-outline-danger btn-sm">
+            <i className="fa fa-trash-o"></i>
+          </button>
+          <button 
+            onClick={()=>onIncrease(id)}
+            className="btn btn-outline-success btn-sm">
+            <i className="fa fa-plus-circle"></i>
+          </button>
+          <button 
+            onClick={()=>onDecrease(id)}
+            className="btn btn-outline-warning btn-sm ">
+            <i className="fa fa-minus-circle"></i>
+          </button>
+        </td>
+      </tr>
+    );
+  }
+
   return (
     <div className="shopping-cart-table">
     <h2>Your Order</h2>
@@ -11,33 +46,19 @@ const ShoppingCartTable = () => {
             <th>#</th>
             <th>Item</th>
             <th>Count</th>
-            <th>Price</th>
+            <th>Total</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody className="">
-          <tr>
-            <td>1</td>
-            <td>Title of book</td>
-            <td>5</td>
-            <td>$40</td>
-            <td>
-              <button className="btn btn-outline-danger btn-sm">
-                <i className="fa fa-trash-o"></i>
-              </button>
-              <button className="btn btn-outline-success btn-sm">
-                <i className="fa fa-plus-circle"></i>
-              </button>
-              <button className="btn btn-outline-warning btn-sm ">
-                <i className="fa fa-minus-circle"></i>
-              </button>
-            </td>
-          </tr>
+          {
+            items.map(renderRow())
+          }
           
         </tbody>       
       </table>
       <div className="total">
-        Total: $201
+        Total: ${total}
       </div>
     </div>
   )

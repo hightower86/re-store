@@ -40,7 +40,7 @@ class BookListContainer extends Component {
     if (error) {
       return <ErrorIndicator errorMessage={error}/>
     }
-    return <BookList books={books}/>
+    return <BookList books={books}/>;
   };
 }
 
