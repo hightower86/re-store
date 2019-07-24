@@ -1,19 +1,19 @@
 
 const booksRequested = (newBooks) => {
   return {
-    type: 'BOOKS_REQUESTED',
+    type: 'FETCH_BOOKS_REQUEST',
     payload: newBooks
   };
 };
 const booksLoaded = (newBooks) => {
   return {
-    type: 'BOOKS_LOADED',
+    type: 'FETCH_BOOKS_SUCCESS',
     payload: newBooks
   };
 };
 const booksError = (error) => {
   return {
-    type: 'BOOKS_ERROR',
+    type: 'FETCH_BOOKS_FAILURE',
     payload: error
   };
 };
