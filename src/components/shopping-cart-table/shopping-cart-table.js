@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './shopping-cart-table.css';
 
 
@@ -6,13 +7,13 @@ import './shopping-cart-table.css';
 
 const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete}) => {
   
-  items =  items===undefined ? [] : items;
+  //items =  items===undefined ? [] : items;
 
   const renderRow = (item, idx) => {
     const { id, name, count, total } = item;
     return (
       <tr key={id}>
-        <td>{id+1}</td>
+        <td>{idx+1}</td>
         <td>{name}</td>
         <td>{count}</td>
         <td>${total}</td>
@@ -52,7 +53,7 @@ const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete}) =>
         </thead>
         <tbody className="">
           {
-            items.map(renderRow())
+            items.map(renderRow)
           }
           
         </tbody>       
@@ -64,5 +65,30 @@ const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete}) =>
   )
 }
 
-export default ShoppingCartTable
+const mapStateToProps = ({ cartItems, orderTotal }) => {
+  return {
+    items: cartItems,
+    total: orderTotal
+  };
+};
+
+const mapDispatchToProps = () => {
+  return {
+    onIncrease: (id) => {
+      console.log(`Increase ${id}`)
+    },
+    
+    onDecrease: (id) => {
+      console.log(`Decrease ${id}`)
+    },
+    onDelete: (id) => {
+      console.log(`Delete ${id}`)
+    },
+
+  };
+};
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCartTable);
 

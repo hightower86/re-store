@@ -5,12 +5,14 @@ const booksRequested = (newBooks) => {
     payload: newBooks
   };
 };
+
 const booksLoaded = (newBooks) => {
   return {
     type: 'FETCH_BOOKS_SUCCESS',
     payload: newBooks
   };
 };
+
 const booksError = (error) => {
   return {
     type: 'FETCH_BOOKS_FAILURE',
