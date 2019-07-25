@@ -2,19 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './shopping-cart-table.css';
 
-
-
-
-const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete}) => {
+const ShoppingCartTable = ({ items, total, onIncrease, onDecrease, onDelete }) => {
   
-  //items =  items===undefined ? [] : items;
-
   const renderRow = (item, idx) => {
-    const { id, name, count, total } = item;
+    const { id, title, count, total } = item;
     return (
       <tr key={id}>
         <td>{idx+1}</td>
-        <td>{name}</td>
+        <td>{title}</td>
         <td>{count}</td>
         <td>${total}</td>
         <td>
