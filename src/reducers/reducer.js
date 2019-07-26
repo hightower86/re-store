@@ -36,7 +36,6 @@ const updateCartItem = (book, item = {}) => {
   };
 }
 
-
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case 'FETCH_BOOKS_REQUEST':
@@ -73,6 +72,24 @@ const reducer = (state = initialState, action) => {
         ...state,
         cartItems: updateCartItems(state.cartItems, newItem, itemIndex)
       }; 
+
+    case 'BOOK_INCREASED_IN_CART':
+      return {
+        ...state,
+        cartItems: []
+      };
+      
+    case 'BOOK_DECREASED_IN_CART':
+      return {
+        ...state,
+        cartItems: []
+      };
+      
+    case 'BOOK_DELETED_IN_CART':
+      return {
+        ...state,
+        cartItems: []
+      };
       
     default :
       return state;
