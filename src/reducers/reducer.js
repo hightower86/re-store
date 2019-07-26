@@ -21,22 +21,58 @@ const updateCartItems = (cartItems, item, idx) => {
   ]
 };
 
-const updateCartItem = (book, item = {}) => {
-  const { 
+const updateCartItems1 = (bookId, state, action) => {
+  const { books, cartItems } = state;
+
+  //const bookId = action.payload;
+  const book = books.find((book) => book.id === bookId);
+  const idx = cartItems.findIndex(({id}) => id === bookId);
+  const item = cartItems[idx];
+  const newItem = updateCartItem(book, item, action);
+
+  if (idx === -1) {
+    return [
+      ...cartItems,
+      newItem
+    ]
+  }
+  return [
+    ...cartItems.slice(0, idx),
+    newItem,
+    ...cartItems.slice(idx + 1)
+  ]
+};
+
+const updateCartItem = (book, item = {}, action) => {
+  let { 
     id = book.id,
     count = 0,
     title = book.title,
     total = 0 } = item;
 
+    if (action === 'increase' || action === 'add') {
+      count += 1;
+      total += book.price;
+    } else if (action === 'decrease') {
+      count -= 1;
+      total -= book.price;
+    }
+
   return {
     id, 
     title, 
-    count: count + 1, 
-    total: total + book.price
+    count: count, 
+    total: total
   };
 }
 
 const reducer = (state = initialState, action) => {
+  let bookId;
+  let book;
+  let itemIndex;
+  let item;
+  let newItem;
+
   switch (action.type) {
     case 'FETCH_BOOKS_REQUEST':
       return {
@@ -61,34 +97,28 @@ const reducer = (state = initialState, action) => {
       };
 
     case 'BOOK_ADDED_TO_CART':
-      const bookId = action.payload;
-      const book = state.books.find((book) => book.id === bookId);
-      const itemIndex = state.cartItems.findIndex(({id}) => id === bookId);
-      const item = state.cartItems[itemIndex];
-
-      const newItem = updateCartItem(book, item);
-
       return { 
         ...state,
-        cartItems: updateCartItems(state.cartItems, newItem, itemIndex)
+        cartItems: updateCartItems1(action.payload, state, 'add')
       }; 
 
     case 'BOOK_INCREASED_IN_CART':
+
       return {
         ...state,
-        cartItems: []
+        cartItems: updateCartItems1(action.payload, state, 'increase')
       };
       
     case 'BOOK_DECREASED_IN_CART':
       return {
         ...state,
-        cartItems: []
+        cartItems: updateCartItems1(action.payload, state, 'decrease')
       };
       
     case 'BOOK_DELETED_IN_CART':
       return {
         ...state,
-        cartItems: []
+        cartItems: updateCartItems1(action.payload, state, 'delete')
       };
       
     default :
