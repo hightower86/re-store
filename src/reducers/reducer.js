@@ -6,25 +6,8 @@ const initialState = {
   orderTotal: 350
 };
 
-const updateCartItems = (cartItems, item, idx) => {
-
-  if (idx === -1) {
-    return [
-      ...cartItems,
-      item
-    ]
-  }
-  return [
-    ...cartItems.slice(0, idx),
-    item,
-    ...cartItems.slice(idx + 1)
-  ]
-};
-
 const updateCartItems1 = (bookId, state, action) => {
   const { books, cartItems } = state;
-
-  //const bookId = action.payload;
   const book = books.find((book) => book.id === bookId);
   const idx = cartItems.findIndex(({id}) => id === bookId);
   const item = cartItems[idx];
@@ -34,6 +17,12 @@ const updateCartItems1 = (bookId, state, action) => {
     return [
       ...cartItems,
       newItem
+    ]
+  }
+  if (action === 'delete' || newItem.count < 1) {
+    return [
+      ...cartItems.slice(0, idx),
+      ...cartItems.slice(idx + 1)
     ]
   }
   return [
@@ -67,11 +56,6 @@ const updateCartItem = (book, item = {}, action) => {
 }
 
 const reducer = (state = initialState, action) => {
-  let bookId;
-  let book;
-  let itemIndex;
-  let item;
-  let newItem;
 
   switch (action.type) {
     case 'FETCH_BOOKS_REQUEST':
