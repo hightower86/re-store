@@ -8,7 +8,6 @@ const initialState = {
     cartItems: [],
     orderTotal: 0
   }
-  
 };
 
 const updateCartItems = (cartItems, item, idx) => {
@@ -49,7 +48,7 @@ const updateCartItem = (book, item = {}, quantity) => {
 };
 
 const updateOrder = (state, bookId, quantity) => {
-  const { bookList = { books }, shoppingCart = { cartItems } } = state;
+  const { bookList: { books }, shoppingCart: { cartItems } } = state;
   const book = books.find((book) => book.id === bookId);
   const itemIndex = cartItems.findIndex(({id}) => id === bookId);
   const item = cartItems[itemIndex];
@@ -62,6 +61,13 @@ const updateOrder = (state, bookId, quantity) => {
 };
 
 const updateBookList = (state, action) => {
+  if (state === undefined) {
+    return {
+      books: [],
+      loading: true,
+      error: null
+    };
+  }
   switch (action.type) {
     case 'FETCH_BOOKS_REQUEST':
         return {
@@ -82,7 +88,7 @@ const updateBookList = (state, action) => {
         error: action.payload
       };
     default:
-      return state;
+      return state.bookList;
   }
 };
  
@@ -99,7 +105,7 @@ const updateShoppingCart = (state, action) => {
       return updateOrder(state, action.payload, -item.count);
 
     default :
-      return state;
+      return state.shoppingCart;
   }
 };
 
